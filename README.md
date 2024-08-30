@@ -11,7 +11,7 @@ To run the tests or the main script using Docker locally, follow these steps:
     Navigate to the project root directory and build the Docker image:
 
     ```bash
-    docker build -t fixed-width-parser
+    docker build -t fixed-width-parser problem_1/
     ```
 
 2. Run Unit Tests
