@@ -2,31 +2,37 @@
 
 ## Problem 1 - Parse fixed width file
 
-### Run Using Docker
+### Running Locally
 
-1. Clone the repository:
+To run the tests or the main script using Docker locally, follow these steps:
 
-    ```bash
-    git clone <repository-url>
-    cd problem_1
-    ```
+1. Build the Docker Image
 
-2. Build the Docker image:
+    Navigate to the project root directory and build the Docker image:
 
     ```bash
-    docker build -t fixed-width-parser .
+    docker build -t fixed-width-parser
     ```
 
-3. Run the Docker container:
+2. Run Unit Tests
+
+    Use the RUN_TESTS=true environment variable to run the tests:
 
     ```bash
-    docker run --rm -v $(pwd):/app fixed-width-parser
+    docker run --rm -v $(pwd)/problem_1/output:/app/output -e RUN_TESTS=true fixed-width-parser
     ```
 
-   This will execute the `fixed_width_parser.py` script inside the container and output the files in your project directory.
+3. Run the Main Python Script
 
-    After running the Docker container, check the current directory on your host machine for the files output_fixed_width.txt and output_data.csv.
-    Open and verify these files to ensure that:
+    Run the Docker container without the RUN_TESTS environment variable:
+
+    ```bash
+    docker run --rm -v $(pwd)/problem_1/output:/app/output fixed-width-parser
+    ```
+
+    This will execute the `fixed_width_parser.py` script inside the container and output the files in the subdirectory `/problem_1/output`.
+
+    After running the command, check the `/problem_1/output` directory in your project root. You should see the following files:
     - `output_fixed_width.txt`: contains the fixed-width formatted data as specified in spec.json.
     - `output_data.csv`: contains the parsed, comma-separated values.
 

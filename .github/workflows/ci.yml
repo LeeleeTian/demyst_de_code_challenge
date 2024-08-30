@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Build Docker image
+      run: docker build -t fixed-width-parser problem_1/
+
+    - name: Create output directory
+      run: mkdir -p output
+
+    - name: Run unit tests in Docker container
+      run: docker run --rm -v $(pwd)/output:/app/output -e RUN_TESTS=true fixed-width-parser

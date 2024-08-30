@@ -40,8 +40,15 @@ def parse_fixed_width_to_csv(input_file, output_file):
                 index += offset
             csv_writer.writerow(parsed_row)
 
+# Example usage:
+# Dummy data to generate fixed-width file
+data = [
+    ["12345", "Hello World", "ABC", "12", "More text here", "1234567", "1234567890", "Another text", "20 characters here    ", "End of line  "],
+    ["67890", "Another row", "XYZ", "34", "Additional data ", "7654321", "0987654321", "More content", "Another set of text  ", "Line end text"]
+]
+
 # Generate fixed-width file
-generate_fixed_width_file('input_data.txt', 'output_fixed_width.txt')
+generate_fixed_width_file(data, '/app/output/output_fixed_width.txt')
 
 # Parse fixed-width file to CSV
-parse_fixed_width_to_csv('output_fixed_width.txt', 'output.csv')
+parse_fixed_width_to_csv('/app/output/output_fixed_width.txt', '/app/output/output.csv')
