@@ -7,3 +7,4 @@ __pycache__/
 
 # But do not ignore input_data.txt in the problem_1 directory
 !problem_1/input_data.txt
+!problem_2/requirements.txt
