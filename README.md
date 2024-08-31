@@ -37,19 +37,42 @@ To run the tests or the main script using Docker locally, follow these steps:
     - `output_data.csv`: contains the parsed, comma-separated values.
 
 
-## Problem 2
+## Problem 2 - Data processing
 
-### Data processing
+### Running Locally for smaller files
 
-- Generate a csv file containing first_name, last_name, address, date_of_birth
-- Process the csv file to anonymise the data
-- Columns to anonymise are first_name, last_name and address
-- You might be thinking  that is silly
-- Now make this work on 2GB csv file (should be doable on a laptop)
-- Demonstrate that the same can work on bigger dataset
-- Hint - You would need some distributed computing platform
+To run the tests or the main script using Docker locally for small file, follow these steps:
 
-## Choices
+1. Build the Docker Image
 
-- Any language, any platform
-- One of the above problems or both, if you feel like it.
+    Navigate to the project root directory and build the Docker image:
+
+    ```bash
+    docker build -t data-processing problem_2/
+    ```
+
+2. Run Unit Tests
+
+    Use the RUN_TESTS=true environment variable to run the tests:
+
+    ```bash
+    docker run --rm -v $(pwd)/problem_2/output:/app/output -e RUN_TESTS=true data-processing
+    ```
+
+3. Run the Main Python Script
+
+    - To generate a small CSV file (e.g., 0.001 GB), run the following command:
+
+        ```bash
+        docker run --rm -v $(pwd)/problem_2/output:/app/output -e TASK=generate_csv -e FILE_SIZE=0.001 -e OUTPUT_FILE=/app/output/generated_data.csv data-processing
+        ```
+
+        This will generate a small CSV file `/problem_2/output/generated_data.csv`.
+
+    - To anonymize the generated CSV file, use the following command: 
+
+        ```bash
+        docker run --rm -v $(pwd)/problem_2/output:/app/output -e TASK=anonymize_data -e INPUT_FILE=/app/output/generated_data.csv -e OUTPUT_FILE=/app/output/anonymized_data.csv data-processing
+        ```
+
+        This will generate a small CSV file `/problem_2/output/anonymized_data.csv` with anonymous name `JOHN DOE` and address `123 Main Street, City, State`.

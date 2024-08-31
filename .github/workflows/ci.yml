@@ -28,3 +28,9 @@ jobs:
 
     - name: Run unit tests in Docker container
       run: docker run --rm -v $(pwd)/output:/app/output -e RUN_TESTS=true fixed-width-parser
+
+    - name: Build Docker image for program_2
+      run: docker build -t data-processing problem_2/
+
+    - name: Run unit tests for program_2 in Docker container
+      run: docker run --rm -v $(pwd)/output:/app/output -e RUN_TESTS=true data-processing

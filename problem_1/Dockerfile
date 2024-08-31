@@ -7,8 +7,6 @@ COPY spec.json /app/
 COPY tests /app/tests/
 COPY entrypoint.sh /app/
 
-# Make sure all files have execution permissions
 RUN chmod +x /app/entrypoint.sh
 
-# Default command is to run the entrypoint script
 CMD ["/app/entrypoint.sh"]
