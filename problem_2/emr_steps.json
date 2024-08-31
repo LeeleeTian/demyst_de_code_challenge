@@ -1,0 +1,30 @@
+[
+    {
+        "Name": "GenerateCSV",
+        "ActionOnFailure": "CONTINUE",
+        "Type": "CUSTOM_JAR",
+        "Jar": "command-runner.jar",
+        "Args": [
+            "spark-submit",
+            "--deploy-mode", "cluster",
+            "--master", "yarn",
+            "s3://demyst-code-challenge/scripts/generate_csv.py",
+            "12",
+            "s3://demyst-code-challenge/output/generated_data.csv"
+        ]
+    },
+    {
+        "Name": "AnonymizeData",
+        "ActionOnFailure": "CONTINUE",
+        "Type": "CUSTOM_JAR",
+        "Jar": "command-runner.jar",
+        "Args": [
+            "spark-submit",
+            "--deploy-mode", "cluster",
+            "--master", "yarn",
+            "s3://demyst-code-challenge/scripts/anonymize_data.py",
+            "s3://demyst-code-challenge/output/generated_data.csv",
+            "s3://demyst-code-challenge/output/anonymized_data.csv"
+        ]
+    }
+]

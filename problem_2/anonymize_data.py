@@ -22,18 +22,7 @@ def anonymize_data(input_file, output_file):
                       .withColumn("address", fixed_address())
     
     # Use coalesce to write to a single file
-    temp_output_dir = "temp_output"
-    anonymized_df.coalesce(1).write.option("header", True).csv(temp_output_dir, mode='overwrite')
-
-    # Find the part file in the temporary directory
-    part_file = next((f for f in os.listdir(temp_output_dir) if f.startswith('part-')), None)
-    if part_file:
-        temp_part_file = os.path.join(temp_output_dir, part_file)
-        # Use shutil.move to move across file systems
-        shutil.move(temp_part_file, output_file)
-
-    # Clean up the temporary directory
-    shutil.rmtree(temp_output_dir)
+    anonymized_df.coalesce(1).write.option("header", True).csv(output_file, mode='overwrite')
 
     # Stop the Spark session
     spark.stop()

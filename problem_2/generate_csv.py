@@ -22,15 +22,7 @@ def generate_csv(file_size_gb, output_file):
     )
     
     # Use coalesce to write to a single file
-    temp_output_dir = "temp_output"
-    df.coalesce(1).write.option("header", True).csv(temp_output_dir, mode='overwrite')
-
-    # Find the part file in the temporary directory
-    part_file = next((f for f in os.listdir(temp_output_dir) if f.startswith('part-')), None)
-    if part_file:
-        temp_part_file = os.path.join(temp_output_dir, part_file)
-        # Use shutil.move to move across file systems
-        shutil.move(temp_part_file, output_file)
+    df.coalesce(1).write.option("header", True).csv(output_file, mode='overwrite')
 
     # Stop the Spark session
     spark.stop()
